@@ -13,22 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+//Auth::routes();
+Route::get("/",function(){
+    return "home";
 });
-Route::get('/firestore', function () {
-    // dd(phpinfo());
-    $firestore  = app('firebase.firestore');
-$db = $firestore->database();
-dd($db->collection("users")->documents()->rows());
-});
-//dashboard pages
-Route::get('/', function () {
-    return view('welcome');
-})->name('dashboard');
-Route::get('/datatables', function () {
-    return view('data-tables');
-})->name('data-tables');
-Route::get('/simpletables', function () {
-    return view('simple-tables');
-})->name('simple-tables');
+//Route::get('/home', 'HomeController@index')->name('home');
