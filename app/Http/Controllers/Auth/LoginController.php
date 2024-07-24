@@ -1,19 +1,19 @@
 <?php
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
+use Kreait\Firebase\Exception\FirebaseException;
+
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Kreait\Firebase\Contract\Auth as FirebaseAuth;
 use Kreait\Firebase\Auth\SignInResult\SignInResult;
-use Kreait\Firebase\Exception\FirebaseException;
-use Illuminate\Validation\ValidationException;
-
-use Illuminate\Support\Facades\Auth;
-use Session;
-use App\User;
 
 class LoginController extends Controller
 {
@@ -35,7 +35,6 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $auth;
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
@@ -43,12 +42,9 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct(FirebaseAuth $auth)
+    public function __construct()
     {
-
         $this->middleware("guest")->except("logout");
-        $this->auth =app("firebase.auth");
-      // $auth = app("firebase.auth");
     }
 
     protected function login(Request $request)
@@ -69,6 +65,7 @@ class LoginController extends Controller
             return redirect($this->redirectPath());
 
         } catch (FirebaseException $e) {
+            logger($e->getMessage());
             throw ValidationException::withMessages([
                 $this->username() => [trans("auth.failed")],
             ]);

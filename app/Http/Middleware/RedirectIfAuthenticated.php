@@ -19,6 +19,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
+            // TODO switch to admin,lawyer pages based in auth 
             return redirect(RouteServiceProvider::HOME);
         }
 

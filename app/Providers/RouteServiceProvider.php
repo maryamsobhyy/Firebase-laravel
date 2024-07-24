@@ -48,7 +48,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->adminWebRoutes();
 
-
+        $this->WebRoutes();
 
         //
     }
@@ -75,6 +75,13 @@ class RouteServiceProvider extends ServiceProvider
              ->prefix("admin")
 
             ->group(base_path('routes/admin.php'));
+    }
+    protected function WebRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+
+            ->group(base_path('routes/web.php'));
     }
     /**
      * Define the "api" routes for the application.

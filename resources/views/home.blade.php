@@ -15,6 +15,8 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+
+                    <a href="/admin">Admin routes</a>
                 </div>
             </div>
         </div>
